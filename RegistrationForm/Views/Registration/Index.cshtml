@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["Title"] = "County";
+}
+<style>
+    .error {
+        color: red;
+    }
+
+    .required {
+        color: red;
+    }
+</style>
+
+<head>
+    <link href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" type="text/css" />
+
+</head>
+<div class="card mb-5 mb-xl-8">
+    <div class="card-header border-0 pt-5">
+        <h3 class="card-title align-items-start flex-column">
+            <span class="card-label fw-bolder fs-3 mb-1">User Registration</span>
+        </h3>
+        <div class="card-toolbar" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover" title="Click to add a country">
+            <a id="btnNewCounty" href="#" class="btn btn-sm btn-primary btn-active-primary" data-bs-toggle="modal" data-bs-target="#addCountyModal">
+                <span class="svg-icon svg-icon-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1" transform="rotate(-90 11.364 20.364)" fill="black" />
+                        <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="black" />
+                    </svg>
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="card-body py-3">
+        <div class="table-responsive">
+            <table id="CountyTable" class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                <thead>
+                    <tr class="fw-bolder text-muted">
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="AddRegistration" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded">
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                </div>
+            </div>
+            <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                <form id="RegForm" class="form" action="#">
+                    <div class="mb-13">
+                        <h1 class="mb-3 RegTitle">New Registration</h1>
+                    </div>
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">Name<span style="color:red" class="required"></span></label>
+                        <input id="Id" type="hidden" class="form-control form-control-solid" name="Id" />
+                        <input id="Name" type="text" class="form-control form-control-solid" placeholder="Enter Name" name="Name" required />
+                    </div>
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">Email<span style="color:red" class="required"></span></label>
+                        <input id="Email" type="text" class="form-control form-control-solid" placeholder="Enter Email" name="Email" required />
+                    </div>
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">Phone<span style="color:red" class="required"></span></label>
+                        <input id="Phone" type="text" class="form-control form-control-solid" placeholder="Enter Phone" name="Phone" required />
+                    </div>
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">Addess<span style="color:red" class="required"></span></label>
+                        <input id="Address" type="text" class="form-control form-control-solid" placeholder="Enter Addess" name="Address" required />
+                    </div>
+
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">State<span style="color:red" class="required"></span></label>
+                        @*<input id="Website" type="text" class="form-control form-control-solid" placeholder="Enter Web" name="Website" required />*@
+                        <select class="form-select form-select--lg form-select-solid" placeholder="Choose a State" name="ddlState" id="ddlState">
+                        </select>
+                    </div>
+                    <div class="d-flex flex-column mb-8 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">City<span style="color:red" class="required"></span></label>
+                        @*<input id="status" type="text" class="form-control form-control-solid" placeholder="Enter status" name="status" required />*@
+                        <select class="form-select form-select--lg form-select-solid" placeholder="Choose a City" name="ddlcity" id="ddlcity">
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" id="btnSubmit" class="btn btn-primary">
+                            <span class="indicator-label">Save</span>
+                            <span class="indicator-progress">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ConfirmDelete" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded">
+            <div class="modal-header pb-0 border-0 justify-content-end">
+                <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                </div>
+            </div>
+            <div class="modal-body scroll-y px-10 px-lg-15 pt-0 pb-15">
+                <div class="mb-13">
+                    <h1 class="mb-3">Delete Registration</h1>
+                </div>
+                <div class="row g-9 mb-8">
+                    <label class="fs-6 fw-bold mb-2">Are you sure you want to Delete  ?</label>
+                </div>
+                <div class="text-center">
+                    @*<button type="button" id="btnCancel" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>*@
+                    <button type="button" id="btnDeleteCounty" class="btn btn-primary">
+                        <span class="indicator-label">Delete</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"
+            integrity="sha512-37T7leoNS06R80c8Ulq7cdCDU5MNQBwlYoy1TX/WUsLFC2eYNqtKlV0QjH7r8JpG/S0GUMZwebnVFLPd6SU5yg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer">
+    </script>
+
+    <!-- ✅ THIRD - load additional methods ✅ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"
+            integrity="sha512-XZEy8UQ9rngkxQVugAdOuBRDmJ5N4vCuNXCh8KlniZgDKTvf7zl75QBtaVG1lEhMFe2a2DuA22nZYY+qsI2/xA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script src="~/js/Registration.js"></script>
+
+
+
+}
